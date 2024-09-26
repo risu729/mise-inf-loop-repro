@@ -1,0 +1,32 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  list-tasks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      MISE_LOG_LEVEL: trace
+
+    steps:
+      - uses: actions/checkout@v4.2.0
+
+      - uses: jdx/mise-action@v2.1.0
+        with:
+          install: false
+          cache: false
+
+      # only install node
+      - run: mise install node
+
+      - run: mise doctor
+
+      - run: which node
+
+      # hangs because npm:@biomejs/biome is missing
+      - run: node --version
