@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  list-tasks:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 3
 
     env:
       MISE_LOG_LEVEL: trace
@@ -21,10 +21,10 @@ jobs:
           install: false
           cache: false
 
+      - run: mise doctor
+
       # only install node
       - run: mise install node
-
-      - run: mise doctor
 
       - run: which node
 
