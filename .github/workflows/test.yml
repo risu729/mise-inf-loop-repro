@@ -28,6 +28,8 @@ jobs:
 
       - run: rm -rf ~/.local/share/mise/shims
 
+      - run: sudo rm $(which node)
+
       - run: which node
 
       # hangs because npm:@biomejs/biome is missing
