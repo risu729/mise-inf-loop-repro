@@ -26,6 +26,8 @@ jobs:
       # only install node
       - run: mise install node
 
+      - run: rm -rf ~/.local/share/mise/shims
+
       - run: which node
 
       # hangs because npm:@biomejs/biome is missing
