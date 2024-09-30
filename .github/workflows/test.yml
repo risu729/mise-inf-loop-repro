@@ -28,9 +28,13 @@ jobs:
 
       - run: rm -rf ~/.local/share/mise/shims
 
-      - run: sudo rm $(which node)
+      - run: sudo rm $(which npm)
 
       - run: which node
+        continue-on-error: true
+
+      - run: which npm
+        continue-on-error: true
 
       # hangs because npm:@biomejs/biome is missing
       - run: mise x -- node --version
