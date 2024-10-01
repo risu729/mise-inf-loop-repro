@@ -23,7 +23,7 @@ jobs:
       - run: echo "$PATH"
 
       # remove mise shims from PATH
-      - run: echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':' | sed 's/:$//' > $GITHUB_PATH
+      - run: export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
 
       - run: echo "$PATH"
 
