@@ -19,5 +19,7 @@ jobs:
           cache: false
           log_level: trace
 
-      # hangs because npm:@biomejs/biome is missing
-      - run: mise x -- node --version
+      # remove mise shims from PATH
+      - run: |
+          export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
+          mise x -- node --version
