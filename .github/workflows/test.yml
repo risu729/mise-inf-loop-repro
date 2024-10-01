@@ -22,7 +22,9 @@ jobs:
       - run: echo "$PATH"
 
       # remove mise shims from PATH
-      - run: export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
+      - run: |
+          export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
+          echo "$PATH"
 
       - run: echo "$PATH"
 
