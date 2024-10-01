@@ -10,21 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
 
-    env:
-      MISE_LOG_LEVEL: trace
-
     steps:
       - uses: actions/checkout@v4.2.0
 
       - uses: jdx/mise-action@v2.1.0
         with:
-          install: false
+          # only install node
+          install_args: node
           cache: false
+          log_level: trace
 
-      - run: mise doctor
+      - run: echo "$PATH"
 
-      # only install node
-      - run: mise install node
+      - run: cat "$GITHUB_PATH"
 
       - run: rm -rf ~/.local/share/mise/shims
 
