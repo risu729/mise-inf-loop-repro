@@ -23,5 +23,4 @@ jobs:
       - run: |
           export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
           sudo rm $(which npm)
-          which npm || true
           mise x -- node --version
