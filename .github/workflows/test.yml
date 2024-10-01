@@ -22,9 +22,10 @@ jobs:
 
       - run: echo "$PATH"
 
-      - run: cat "$GITHUB_PATH"
+      # remove mise shims from PATH
+      - run: echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':' | sed 's/:$//' > $GITHUB_PATH
 
-      - run: rm -rf ~/.local/share/mise/shims
+      - run: echo "$PATH"
 
       - run: sudo rm $(which npm)
 
