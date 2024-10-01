@@ -2,31 +2,25 @@ name: test
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
-
-    env:
-      MISE_LOG_LEVEL: trace
+    timeout-minutes: 1
 
     steps:
       - uses: actions/checkout@v4.2.0
 
       - uses: jdx/mise-action@v2.1.0
         with:
-          install: false
+          # only install node
+          install_args: node
           cache: false
-
-      - run: mise doctor
-
-      # only install node
-      - run: mise install node
-
-      - run: which node
+          log_level: trace
 
       # hangs because npm:@biomejs/biome is missing
-      - run: node --version
+      - run: |
+          export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
+          sudo rm $(which npm)
+          mise x -- node --version
