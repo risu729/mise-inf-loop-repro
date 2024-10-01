@@ -7,7 +7,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 1
 
     steps:
       - uses: actions/checkout@v4.2.0
@@ -19,22 +19,9 @@ jobs:
           cache: false
           log_level: trace
 
-      - run: echo "$PATH"
-
-      # remove mise shims from PATH
+      # hangs because npm:@biomejs/biome is missing
       - run: |
           export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "$HOME/.local/share/mise/shims" | tr '\n' ':')
-          echo "$PATH"
-
-      - run: echo "$PATH"
-
-      - run: sudo rm $(which npm)
-
-      - run: which node
-        continue-on-error: true
-
-      - run: which npm
-        continue-on-error: true
-
-      # hangs because npm:@biomejs/biome is missing
-      - run: mise x -- node --version
+          sudo rm $(which npm)
+          which npm || true
+          mise x -- node --version
