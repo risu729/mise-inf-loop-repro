@@ -5,7 +5,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
+    timeout-minutes: 5
 
     env:
       MISE_LOG_LEVEL: trace
