@@ -17,9 +17,11 @@ jobs:
           gh repo clone jdx/mise "$HOME/misee"
           cd "$HOME/misee"
           git switch release
-          mise run build
+          cargo build --color always --all-features
           echo "$HOME/misee/target/debug" >> "$GITHUB_PATH"
           echo "$HOME/.local/share/mise/shims" >> "$GITHUB_PATH"
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - run: which mise
 
