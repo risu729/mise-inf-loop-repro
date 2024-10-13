@@ -7,15 +7,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
 
+    env:
+      MISE_LOG_LEVEL: trace
+
     steps:
       - uses: actions/checkout@v4.2.0
 
-      - uses: jdx/mise-action@v2.1.0
-        with:
-          # only install node
-          install_args: node
-          cache: false
-          log_level: trace
+      - run: |
+          gh repo clone jdx/mise "$HOME/misee"
+          cd "$HOME/misee"
+          git switch release
+          mise run build
+          echo "$HOME/misee/target/debug" >> "$GITHUB_PATH"
+          echo "$HOME/.local/share/mise/shims" >> "$GITHUB_PATH"
+
+      - run: which mise
+
+      - run: which node
+
+      - run: mise install node
 
       # hangs because npm:@biomejs/biome is missing
       - run: mise ls
